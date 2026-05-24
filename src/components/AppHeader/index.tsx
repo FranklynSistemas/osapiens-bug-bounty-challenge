@@ -3,7 +3,9 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled, useTheme } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 import { User } from "../../api/services/User/store";
+import { ERoute } from "../../types/global";
 import AvatarMenu from "../AvatarMenu";
 import LanguageSelect from "../LanguageSelect";
 
@@ -33,6 +35,7 @@ const AppBar = styled(MuiAppBar)<AppBarProps>(({ theme }) => ({
 const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
   const { user, pageTitle } = props;
   const { t } = useTranslation("app");
+  const history = useHistory();
   const theme = useTheme();
 
   const [count, setCount] = useState(0);
@@ -65,10 +68,12 @@ useEffect(() => {
               sx={{
                 ...typoStyle,
                 color: theme.palette.primary.main,
-                mb: theme.spacing(0.5)
+                mb: theme.spacing(0.5),
+                cursor: "pointer"
               }}
               variant="h6"
               component="div"
+              onClick={() => history.push(ERoute.HOME)}
             >
               {t("appTitle").toLocaleUpperCase()}
             </Typography>
