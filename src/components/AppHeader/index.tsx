@@ -1,11 +1,12 @@
 import { Grow, Box, Theme, Toolbar, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled, useTheme } from "@mui/material/styles";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { User } from "../../api/services/User/store";
 import { ERoute } from "../../types/global";
+import { useCountdown } from "../../hooks/useCountdown";
 import AvatarMenu from "../AvatarMenu";
 import LanguageSelect from "../LanguageSelect";
 
@@ -39,20 +40,7 @@ const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
   const history = useHistory();
   const theme = useTheme();
 
-  const [count, setCount] = useState(0);
-  const hours = 1;
-  const minutes = hours * 60;
-  const seconds = minutes * 60;
-  const countdown = seconds - count;
-  const countdownMinutes = `${~~(countdown / 60)}`.padStart(2, "0");
-  const countdownSeconds = (countdown % 60).toFixed(0).padStart(2, "0");
-
-useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCount((c) => c + 1);
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const { minutes, seconds } = useCountdown();
 
   return (
     <AppBar ref={ref} position="fixed" sx={{ width: "100vw" }}>
@@ -60,7 +48,7 @@ useEffect(() => {
         <Box sx={{ width: "100%", flexDirection: "row", display: "flex" }}>
           <Box>
             <Typography variant="h6" component="div" color="primary">
-              {countdownMinutes}:{countdownSeconds}
+              {minutes}:{seconds}
             </Typography>
           </Box>
           <Box sx={{ width: 20, height: 20, flex: 1 }} />
