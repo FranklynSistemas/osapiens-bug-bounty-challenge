@@ -36,6 +36,11 @@ const AvatarMenu = (props: AvatarMenuProps) => {
     setAnchorEl(null);
   };
 
+  const navigateAndClose = (path: string) => {
+    handleClose();
+    history.push(path);
+  };
+
   return (
     <div>
       <Avatar onClick={handleClick} {...stringAvatar(user)} />
@@ -61,7 +66,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
           </Typography>
           <Box m={1} />
           <Button
-            onClick={() => history.push(ERoute.SETTINGS_ACCOUNT)}
+            onClick={() => navigateAndClose(ERoute.SETTINGS_ACCOUNT)}
             variant="outlined"
             color="primary"
             size="medium"
@@ -78,7 +83,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
           style={{ color: theme.palette.grey[500] }}
         >
           <Button
-            onClick={() => history.push(ERoute.SETTINGS_DETAILS)}
+            onClick={() => navigateAndClose(ERoute.SETTINGS_DETAILS)}
             color="inherit"
             variant="text"
             size="small"
