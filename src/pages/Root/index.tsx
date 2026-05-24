@@ -1,35 +1,21 @@
 import { Box, CircularProgress, Slide } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useSnackbar } from "notistack";
 import { useUserStore } from "../../api/services/User";
 import AppHeader from "../../components/AppHeader";
 import useMatchedRoute from "../../hooks/useMatchedRoute";
+import { useInitialFetch } from "../../hooks/useInitialFetch";
+import { usePageTitle } from "../../hooks/usePageTitle";
 import { observer } from "mobx-react";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { ActionResultStatus, TRoute } from "../../types/global";
 import AccessDenied from "../AccessDenied";
 import Login from "../Login";
 import { routes as useRoutes } from "../routes";
 
-const hideSplashScreen = () => {
-  const splashscreen = document.getElementById("app-splashscreen");
-
-  if (splashscreen) {
-    splashscreen.className = "";
-    setTimeout(() => {
-      splashscreen.remove();
-    }, 300);
-  }
-};
-
 const Root = () => {
-  const { t } = useTranslation("app");
   const userStore = useUserStore();
   const { user } = userStore;
+  const { initialLoading } = useInitialFetch();
   const theme = useTheme();
-  const { enqueueSnackbar } = useSnackbar();
-  const [initialLoading, setInitialLoading] = useState(true);
   const routes = [...useRoutes] as readonly TRoute[];
   const [fallbackRoute] = routes;
   const Fallback = fallbackRoute.Component;
@@ -38,36 +24,15 @@ const Root = () => {
     Fallback,
     { matchOnSubPath: true },
   );
-
-  let pageTitle = t(`routes.${route.path}`);
-
-  if (route.path.indexOf("data") > -1 || route.path.indexOf("settings") > -1) {
-    const [, groupName] = route.path.split("/");
-    pageTitle = t(`routes./${groupName}`);
-  }
-
-  const notifyError = (response: { status: ActionResultStatus; error?: unknown }) => {
-    if (response.status === ActionResultStatus.ERROR) {
-      const message = response.error instanceof Error ? response.error.message : String(response.error);
-      enqueueSnackbar(message, { variant: "error" });
-    }
-  };
-
-  useEffect(() => {
-    userStore
-      .getOwnUser()
-      .then(notifyError)
-      .finally(() => {
-        setInitialLoading(false);
-        hideSplashScreen();
-      });
-  }, []);
+  const pageTitle = usePageTitle(route);
 
   const onLogin = async () => {
     userStore.toggleLoginRole();
     const response = await userStore.getOwnUser();
     if (response.status === ActionResultStatus.ERROR) {
-      throw response.error instanceof Error ? response.error : new Error(String(response.error));
+      throw response.error instanceof Error
+        ? response.error
+        : new Error(String(response.error));
     }
   };
 
