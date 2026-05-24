@@ -32,7 +32,7 @@ export const buildUrl = <ERoute extends string>(
   const paramObj: { [i: string]: string } = params;
 
   for (const key of Object.keys(paramObj)) {
-    ret = ret.replace(`:${key}`, paramObj[key]);
+    ret = ret.replace(`:${key}`, () => paramObj[key]);
   }
 
   return ret;
