@@ -1,1 +1,39 @@
-{}
+{
+  "logout": "Abmelden",
+  "appTitle": "Lieferanten-OS-Anwendung",
+  "routes": {
+    "/home": "Bug Bounty Challenge"
+  },
+  "home": {
+    "welcome": "Willkommen!",
+    "intro": "Dies ist eine Demo-Anwendung mit einigen Glitches und Fehlern, bei denen wir hoffen, dass Sie sie finden können. 😃 Hier die Liste der <b>bekannten</b> Probleme:",
+    "sidenote": "Alle Fehler haben unterschiedliche Komplexitätsgrade und sind alle ziemlich häufig (echte Probleme für jeden React-Entwickler). Um alle offenen Punkte zu lösen, sind unterschiedliche Fähigkeiten erforderlich: googeln, Erfahrung, Lesen von Dokumentationen und Fehlermeldungen, Kreativität und analytisches Denken."
+  },
+  "issues": [
+    {
+      "icon": "🐞",
+      "title": "Konsolenfehler: Warnung: Jedes Kind in einer Liste sollte eine einzigartige \"key\"-Eigenschaft haben.",
+      "description": "Wir hoffen, Sie können finden, was diesen Fehler verursacht, da er nervtötend ist."
+    },
+    {
+      "icon": "🐞",
+      "title": "Das Wort \"bekannt\" sollte im Einführungstext fett dargestellt werden.",
+      "description": "Stellen Sie bei der Implementierung einer Lösung bitte sicher, dass der i18n-Text nicht geändert wird."
+    },
+    {
+      "icon": "🐞",
+      "title": "Benutzer-Avatar in der App-Leiste fehlt, obwohl der Benutzer beim App-Start korrekt geladen werden sollte.",
+      "description": "Beim App-Start laden wir das aktuelle Benutzerobjekt über einen MobX-Store, aber aus irgendeinem Grund wird der Benutzer-Avatar oben rechts in der App-Leiste nicht angezeigt. Achtung: Bei der Lösung dieses Problems könnten Sie auf einen zweiten Fehler stoßen."
+    },
+    {
+      "icon": "🐞",
+      "title": "Optional: Countdown ist manchmal kaputt (schwer zu reproduzieren).",
+      "description": "Einige Entwickler erwähnten, dass sich der Countdown in der App-Kopfzeile manchmal seltsam verhält, aber leider konnten sie diesen Glitch nicht zuverlässig reproduzieren. Vielleicht finden Sie die Ursache."
+    },
+    {
+      "icon": "⭐️",
+      "title": "Optional: Es wäre großartig, die Sprache wechseln zu können.",
+      "description": "Bitte fügen Sie ein Sprachauswahl-Steuerelement in der App-Leiste hinzu, um die UI-Sprache zwischen Englisch und Deutsch umzuschalten."
+    }
+  ]
+}

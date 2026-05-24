@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { User } from "../../api/services/User/store";
 import AvatarMenu from "../AvatarMenu";
+import LanguageSelect from "../LanguageSelect";
 
 interface AppBarProps extends MuiAppBarProps {
   theme?: Theme;
@@ -80,7 +81,8 @@ useEffect(() => {
               {pageTitle.toLocaleUpperCase()}
             </Typography>
           </Box>
-          <Box sx={{ flex: 1, justifyContent: "flex-end", display: "flex" }}>
+          <Box sx={{ flex: 1, justifyContent: "flex-end", display: "flex", alignItems: "center" }}>
+            <LanguageSelect />
             <Grow in={Boolean(user && user.eMail)} unmountOnExit>
               <Box display="flex">
                 <AvatarMenu user={user} />
