@@ -13,7 +13,9 @@ import Menu from "@mui/material/Menu";
 import { useTheme } from "@mui/material/styles";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 import { User } from "../../api/services/User/store";
+import { ERoute } from "../../types/global";
 import { stringAvatar } from "../../utils/avatar";
 
 interface AvatarMenuProps {
@@ -24,6 +26,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
   const { user } = props;
   const theme = useTheme();
   const { t } = useTranslation("app");
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,7 +35,6 @@ const AvatarMenu = (props: AvatarMenuProps) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  // const history = useHistory();
 
   return (
     <div>
@@ -59,7 +61,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
           </Typography>
           <Box m={1} />
           <Button
-            // onClick={() => history.push(ERoute.SETTINGS_ACCOUNT)}
+            onClick={() => history.push(ERoute.SETTINGS_ACCOUNT)}
             variant="outlined"
             color="primary"
             size="medium"
@@ -76,7 +78,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
           style={{ color: theme.palette.grey[500] }}
         >
           <Button
-            // onClick={() => history.push(ERoute.SETTINGS_DETAILS)}
+            onClick={() => history.push(ERoute.SETTINGS_DETAILS)}
             color="inherit"
             variant="text"
             size="small"

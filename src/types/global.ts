@@ -1,6 +1,8 @@
 export enum ERoute {
   ROOT = "/",
-  HOME = "/home"
+  HOME = "/home",
+  SETTINGS_ACCOUNT = "/settings/account",
+  SETTINGS_DETAILS = "/settings/details"
 }
 
 export type TRoute = {

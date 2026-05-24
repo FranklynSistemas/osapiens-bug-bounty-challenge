@@ -2,7 +2,8 @@
   "logout": "Logout",
   "appTitle": "Supplier OS Application",
   "routes": {
-    "/home": "Bug Bounty Challenge"
+    "/home": "Bug Bounty Challenge",
+    "/settings": "Settings"
   },
   "home": {
     "welcome": "Welcome!",
@@ -39,6 +40,16 @@
   "accessDenied": {
     "title": "Access Denied",
     "message": "Please speak to your administrator."
+  },
+  "settings": {
+    "account": {
+      "title": "Edit Profile",
+      "description": "Manage your personal information and preferences."
+    },
+    "details": {
+      "title": "Edit Organization",
+      "description": "Update your organization details and settings."
+    }
   },
   "userMenu": {
     "editProfile": "Edit Profile",

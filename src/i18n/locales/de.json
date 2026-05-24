@@ -2,7 +2,8 @@
   "logout": "Abmelden",
   "appTitle": "Lieferanten-OS-Anwendung",
   "routes": {
-    "/home": "Bug Bounty Challenge"
+    "/home": "Bug Bounty Challenge",
+    "/settings": "Einstellungen"
   },
   "home": {
     "welcome": "Willkommen!",
@@ -39,6 +40,16 @@
   "accessDenied": {
     "title": "Zugriff verweigert",
     "message": "Bitte wenden Sie sich an Ihren Administrator."
+  },
+  "settings": {
+    "account": {
+      "title": "Profil bearbeiten",
+      "description": "Verwalten Sie Ihre persönlichen Daten und Einstellungen."
+    },
+    "details": {
+      "title": "Organisation bearbeiten",
+      "description": "Aktualisieren Sie Ihre Organisationsdaten und -einstellungen."
+    }
   },
   "userMenu": {
     "editProfile": "Profil bearbeiten",

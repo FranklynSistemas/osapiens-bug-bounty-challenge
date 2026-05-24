@@ -5,6 +5,7 @@ import { Box } from "@mui/system";
 import React, { Suspense } from "react";
 import { ERoute, TRoute } from "../types/global";
 import Home from "./Home";
+import Settings from "./Settings";
 
 const Loading = (
   <Grow in={true}>
@@ -32,5 +33,13 @@ export const routes: TRoute[] = [
     path: ERoute.HOME,
     Icon: <Icon path={mdiHome} size={1} />,
     Component: lazyLoad(Home)
+  },
+  {
+    path: ERoute.SETTINGS_ACCOUNT,
+    Component: lazyLoad(Settings)
+  },
+  {
+    path: ERoute.SETTINGS_DETAILS,
+    Component: lazyLoad(Settings)
   }
 ];
