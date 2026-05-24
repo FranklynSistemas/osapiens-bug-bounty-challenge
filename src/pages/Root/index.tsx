@@ -25,10 +25,9 @@ const hideSplashScreen = () => {
 const Root = () => {
   const { t } = useTranslation("app");
   const userStore = useUserStore();
-  const { user } = userStore || {};
+  const { user } = userStore;
   const theme = useTheme();
   const [initialLoading, setInitialLoading] = useState(true);
-  console.log(user);
   const routes = [...useRoutes] as readonly TRoute[];
   const [fallbackRoute] = routes;
   const Fallback = fallbackRoute.Component;

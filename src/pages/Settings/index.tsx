@@ -1,8 +1,7 @@
+import React from "react";
 import { mdiAccount, mdiTag } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Box, Typography } from "@mui/material";
-import { observer } from "mobx-react";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { ERoute } from "../../types/global";
@@ -32,4 +31,4 @@ const Settings = () => {
   );
 };
 
-export default observer(Settings);
+export default Settings;

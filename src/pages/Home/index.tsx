@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Container, Typography } from "@mui/material";
-import { observer } from "mobx-react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -46,4 +45,4 @@ const Home = () => {
   );
 };
 
-export default observer(Home);
+export default Home;
