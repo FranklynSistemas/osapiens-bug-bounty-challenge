@@ -6,7 +6,7 @@ import useMatchedRoute from "../../hooks/useMatchedRoute";
 import { observer } from "mobx-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { TRoute } from "../../types/global";
+import { ActionResultStatus, TRoute } from "../../types/global";
 import AccessDenied from "../AccessDenied";
 import Login from "../Login";
 import { routes as useRoutes } from "../routes";
@@ -28,6 +28,7 @@ const Root = () => {
   const { user } = userStore;
   const theme = useTheme();
   const [initialLoading, setInitialLoading] = useState(true);
+  const [asyncError, setAsyncError] = useState<Error | null>(null);
   const routes = [...useRoutes] as readonly TRoute[];
   const [fallbackRoute] = routes;
   const Fallback = fallbackRoute.Component;
@@ -44,17 +45,36 @@ const Root = () => {
     pageTitle = t(`routes./${groupName}`);
   }
 
+  const handleFetchError = (
+    response: { status: ActionResultStatus; error?: unknown },
+    context: string,
+  ) => {
+    if (response.status === ActionResultStatus.ERROR) {
+      console.error(`${context} failed:`, response.error);
+      setAsyncError(
+        response.error instanceof Error
+          ? response.error
+          : new Error(String(response.error)),
+      );
+    }
+  };
+
   useEffect(() => {
-    userStore.getOwnUser().finally(() => {
-      setInitialLoading(false);
-      hideSplashScreen();
-    });
+    userStore
+      .getOwnUser()
+      .then((response) => handleFetchError(response, "Initial fetch"))
+      .finally(() => {
+        setInitialLoading(false);
+        hideSplashScreen();
+      });
   }, []);
 
   const onLogin = async () => {
     userStore.toggleLoginRole();
-    await userStore.getOwnUser();
+    handleFetchError(await userStore.getOwnUser(), "Login");
   };
+
+  if (asyncError) throw asyncError;
 
   const onLogout = () => {
     userStore.clearUser();

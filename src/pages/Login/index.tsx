@@ -16,7 +16,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleLogin = async () => {
     if (loading) return;
     setLoading(true);
-    await onLogin();
+    try {
+      await onLogin();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
