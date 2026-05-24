@@ -3,7 +3,6 @@ import Icon from "@mdi/react";
 import { Button, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { styled, useTheme } from "@mui/material/styles";
-import { observer } from "mobx-react";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +15,12 @@ const Container = styled("div")(({ theme }) => ({
   overflowY: "scroll",
   background: `url(${""}) repeat content-box`
 }));
-const AccessDenied: React.FC = () => {
+
+interface AccessDeniedProps {
+  onRetry: () => void;
+}
+
+const AccessDenied: React.FC<AccessDeniedProps> = ({ onRetry }) => {
   const { t } = useTranslation("app");
   const theme = useTheme();
 
@@ -30,8 +34,6 @@ const AccessDenied: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  const handleLogout = () => {};
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Container>
@@ -40,8 +42,8 @@ const AccessDenied: React.FC = () => {
           {t("accessDenied.title")}
         </Typography>
         <Typography>{t("accessDenied.message")}</Typography>
-        <Button sx={{ color }} onClick={handleLogout}>
-          {t("logout")}
+        <Button sx={{ color }} onClick={onRetry}>
+          {t("accessDenied.retry")}
         </Button>
       </Container>
       <Box sx={{ flex: 3 }}></Box>
@@ -49,4 +51,4 @@ const AccessDenied: React.FC = () => {
   );
 };
 
-export default observer(AccessDenied);
+export default AccessDenied;

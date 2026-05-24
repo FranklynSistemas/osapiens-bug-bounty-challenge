@@ -39,7 +39,8 @@
   },
   "accessDenied": {
     "title": "Zugriff verweigert",
-    "message": "Bitte wenden Sie sich an Ihren Administrator."
+    "message": "Bitte wenden Sie sich an Ihren Administrator.",
+    "retry": "Erneut anmelden"
   },
   "settings": {
     "account": {

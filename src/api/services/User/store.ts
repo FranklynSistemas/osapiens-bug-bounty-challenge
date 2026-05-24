@@ -15,12 +15,14 @@ export interface User {
 export default class UserStore {
   user: User | null = null;
 
-  // init function
   constructor() {
     makeAutoObservable(this);
   }
 
-  // actions
+  clearUser() {
+    this.user = null;
+  }
+
   async getOwnUser() {
     const [result, error] = (await resultOrError(
       new Promise((resolve) =>

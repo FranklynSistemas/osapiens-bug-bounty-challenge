@@ -16,6 +16,7 @@ interface AppBarProps extends MuiAppBarProps {
 interface AppHeaderProps {
   user: User;
   pageTitle: string;
+  onLogout: () => void;
 }
 
 const typoStyle = {
@@ -33,7 +34,7 @@ const AppBar = styled(MuiAppBar)<AppBarProps>(({ theme }) => ({
 }));
 
 const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
-  const { user, pageTitle } = props;
+  const { user, pageTitle, onLogout } = props;
   const { t } = useTranslation("app");
   const history = useHistory();
   const theme = useTheme();
@@ -90,7 +91,7 @@ useEffect(() => {
             <LanguageSelect />
             <Grow in={Boolean(user && user.eMail)} unmountOnExit>
               <Box display="flex">
-                <AvatarMenu user={user} />
+                <AvatarMenu user={user} onLogout={onLogout} />
               </Box>
             </Grow>
           </Box>

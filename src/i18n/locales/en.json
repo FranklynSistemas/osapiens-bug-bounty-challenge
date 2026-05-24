@@ -39,7 +39,8 @@
   },
   "accessDenied": {
     "title": "Access Denied",
-    "message": "Please speak to your administrator."
+    "message": "Please speak to your administrator.",
+    "retry": "Retry Login"
   },
   "settings": {
     "account": {

@@ -20,10 +20,11 @@ import { stringAvatar } from "../../utils/avatar";
 
 interface AvatarMenuProps {
   user: User;
+  onLogout: () => void;
 }
 
 const AvatarMenu = (props: AvatarMenuProps) => {
-  const { user } = props;
+  const { user, onLogout } = props;
   const theme = useTheme();
   const { t } = useTranslation("app");
   const history = useHistory();
@@ -96,7 +97,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
         <Divider />
         <Box display="flex" flexDirection="column" alignItems="center" p={2}>
           <Tooltip title={<Box>{t("logout")}</Box>}>
-            <Button onClick={() => console.log("logout")} variant="text">
+            <Button onClick={() => { onLogout(); navigateAndClose(ERoute.HOME); }} variant="text">
               <Icon path={mdiLogoutVariant} size={1} />
               <Box m={0.5} />
               {t("logout")}

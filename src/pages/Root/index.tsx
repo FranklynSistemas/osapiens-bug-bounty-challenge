@@ -4,7 +4,7 @@ import { useUserStore } from "../../api/services/User";
 import AppHeader from "../../components/AppHeader";
 import useMatchedRoute from "../../hooks/useMatchedRoute";
 import { observer } from "mobx-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TRoute } from "../../types/global";
 import { resultOrError } from "../../utils/global";
@@ -27,6 +27,7 @@ const Root = () => {
   const userStore = useUserStore();
   const { user } = userStore || {};
   const theme = useTheme();
+  const [initialLoading, setInitialLoading] = useState(true);
   console.log(user);
   const routes = [...useRoutes] as readonly TRoute[];
   const [fallbackRoute] = routes;
@@ -45,7 +46,6 @@ const Root = () => {
   }
 
   const loadingApp = false;
-  const accessDenied = false;
 
   useEffect(() => {
     hideSplashScreen();
@@ -53,12 +53,15 @@ const Root = () => {
 
   useEffect(() => {
     if (!user && userStore) {
-      userStore.getOwnUser();
+      userStore.getOwnUser().finally(() => setInitialLoading(false));
+    } else {
+      setInitialLoading(false);
     }
   }, [user, userStore]);
 
-  if (accessDenied) {
-    return <AccessDenied />;
+  if (!initialLoading && !user) {
+    const handleRetry = () => userStore?.getOwnUser();
+    return <AccessDenied onRetry={handleRetry} />;
   }
 
   return (
@@ -92,7 +95,7 @@ const Root = () => {
         }}
       >
         <Slide direction="down" in={!loadingApp} mountOnEnter>
-          <AppHeader user={user ?? {}} pageTitle={pageTitle} />
+          <AppHeader user={user ?? {}} pageTitle={pageTitle} onLogout={() => userStore?.clearUser()} />
         </Slide>
         <Box
           component="main"
