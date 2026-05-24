@@ -1,23 +1,28 @@
 import { mdiLogin } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Button, CircularProgress, Typography } from "@mui/material";
+import { Alert, Button, CircularProgress, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface LoginProps {
-  onLogin: () => Promise<void> | void;
+  onLogin: () => Promise<void>;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const { t } = useTranslation("app");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleLogin = async () => {
     if (loading) return;
     setLoading(true);
+    setError(null);
     try {
       await onLogin();
+    } catch (e) {
+      console.error("Login failed:", e);
+      setError(t("login.error"));
     } finally {
       setLoading(false);
     }
@@ -42,6 +47,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         {loading ? <CircularProgress size={20} sx={{ mr: 1 }} color="inherit" /> : null}
         {t("login.button")}
       </Button>
+      {error && (
+        <Alert severity="error" sx={{ mt: 2, maxWidth: 400 }}>
+          {error}
+        </Alert>
+      )}
     </Box>
   );
 };

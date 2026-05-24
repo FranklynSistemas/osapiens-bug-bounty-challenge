@@ -40,7 +40,8 @@
   "login": {
     "title": "Welcome",
     "message": "Please log in to continue.",
-    "button": "Login"
+    "button": "Login",
+    "error": "Login failed. Please try again."
   },
   "accessDenied": {
     "title": "Access Denied",

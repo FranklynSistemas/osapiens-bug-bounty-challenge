@@ -40,7 +40,8 @@
   "login": {
     "title": "Willkommen",
     "message": "Bitte melden Sie sich an.",
-    "button": "Anmelden"
+    "button": "Anmelden",
+    "error": "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut."
   },
   "accessDenied": {
     "title": "Zugriff verweigert",

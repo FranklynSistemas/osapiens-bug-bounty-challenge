@@ -1,5 +1,6 @@
 import { Box, CircularProgress, Slide } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useSnackbar } from "notistack";
 import { useUserStore } from "../../api/services/User";
 import AppHeader from "../../components/AppHeader";
 import useMatchedRoute from "../../hooks/useMatchedRoute";
@@ -27,8 +28,8 @@ const Root = () => {
   const userStore = useUserStore();
   const { user } = userStore;
   const theme = useTheme();
+  const { enqueueSnackbar } = useSnackbar();
   const [initialLoading, setInitialLoading] = useState(true);
-  const [asyncError, setAsyncError] = useState<Error | null>(null);
   const routes = [...useRoutes] as readonly TRoute[];
   const [fallbackRoute] = routes;
   const Fallback = fallbackRoute.Component;
@@ -45,24 +46,17 @@ const Root = () => {
     pageTitle = t(`routes./${groupName}`);
   }
 
-  const handleFetchError = (
-    response: { status: ActionResultStatus; error?: unknown },
-    context: string,
-  ) => {
+  const notifyError = (response: { status: ActionResultStatus; error?: unknown }) => {
     if (response.status === ActionResultStatus.ERROR) {
-      console.error(`${context} failed:`, response.error);
-      setAsyncError(
-        response.error instanceof Error
-          ? response.error
-          : new Error(String(response.error)),
-      );
+      const message = response.error instanceof Error ? response.error.message : String(response.error);
+      enqueueSnackbar(message, { variant: "error" });
     }
   };
 
   useEffect(() => {
     userStore
       .getOwnUser()
-      .then((response) => handleFetchError(response, "Initial fetch"))
+      .then(notifyError)
       .finally(() => {
         setInitialLoading(false);
         hideSplashScreen();
@@ -71,10 +65,11 @@ const Root = () => {
 
   const onLogin = async () => {
     userStore.toggleLoginRole();
-    handleFetchError(await userStore.getOwnUser(), "Login");
+    const response = await userStore.getOwnUser();
+    if (response.status === ActionResultStatus.ERROR) {
+      throw response.error instanceof Error ? response.error : new Error(String(response.error));
+    }
   };
-
-  if (asyncError) throw asyncError;
 
   const onLogout = () => {
     userStore.clearUser();
