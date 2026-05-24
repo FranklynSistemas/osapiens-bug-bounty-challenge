@@ -56,6 +56,10 @@
       "description": "Aktualisieren Sie Ihre Organisationsdaten und -einstellungen."
     }
   },
+  "error": {
+    "title": "Etwas ist schiefgelaufen",
+    "retry": "Erneut versuchen"
+  },
   "userMenu": {
     "editProfile": "Profil bearbeiten",
     "editOrganization": "Organisation bearbeiten",

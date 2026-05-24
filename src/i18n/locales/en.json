@@ -56,6 +56,10 @@
       "description": "Update your organization details and settings."
     }
   },
+  "error": {
+    "title": "Something went wrong",
+    "retry": "Try again"
+  },
   "userMenu": {
     "editProfile": "Edit Profile",
     "editOrganization": "Edit Organization",

@@ -1,5 +1,6 @@
 import { Box, Typography, Button } from "@mui/material";
 import React from "react";
+import { withTranslation, WithTranslation } from "react-i18next";
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ interface ErrorBoundaryState {
 }
 
 class ErrorBoundary extends React.Component<
-  ErrorBoundaryProps,
+  ErrorBoundaryProps & WithTranslation,
   ErrorBoundaryState
 > {
   state: ErrorBoundaryState = { error: null };
@@ -24,6 +25,8 @@ class ErrorBoundary extends React.Component<
   };
 
   render() {
+    const { t } = this.props;
+
     if (this.state.error) {
       return (
         <Box
@@ -34,13 +37,13 @@ class ErrorBoundary extends React.Component<
           height="100vh"
         >
           <Typography variant="h4" gutterBottom>
-            Something went wrong
+            {t("error.title")}
           </Typography>
           <Typography variant="body1" color="textSecondary" mb={3}>
             {this.state.error.message}
           </Typography>
           <Button variant="contained" onClick={this.handleReset}>
-            Try again
+            {t("error.retry")}
           </Button>
         </Box>
       );
@@ -50,4 +53,4 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-export default ErrorBoundary;
+export default withTranslation("app")(ErrorBoundary);
