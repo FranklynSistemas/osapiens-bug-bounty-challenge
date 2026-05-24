@@ -47,6 +47,10 @@ i18n
     fallbackLng: FALLBACK_LANGUAGE,
     interpolation: {
       escapeValue: false // not needed for react as it escapes by default
+    },
+    react: {
+      transSupportBasicHtmlNodes: true,
+      transKeepBasicHtmlNodesFor: ["b", "strong", "i", "em", "br"]
     }
   });
 
