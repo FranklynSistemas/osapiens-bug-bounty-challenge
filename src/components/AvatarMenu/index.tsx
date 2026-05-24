@@ -14,34 +14,11 @@ import { useTheme } from "@mui/material/styles";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { User } from "../../api/services/User/store";
+import { stringAvatar } from "../../utils/avatar";
 
 interface AvatarMenuProps {
   user: User;
 }
-
-const getInitials = (user: User) => {
-  if (user.firstName || user.lastName) {
-    const initials = [user.firstName, user.lastName]
-      .map((_) => (_[0] ? _[0].toLocaleUpperCase() : _))
-      .join("");
-    return initials;
-  }
-  return "";
-};
-
-const stringAvatar = (user: User) => {
-  const initials = getInitials(user);
-  // 36 * 7 <= 255
-  const r = Math.floor(parseInt(initials[0] ? initials[0] : "k", 36) * 7);
-  const g = Math.floor(parseInt(initials[1] ? initials[1] : "l", 36) * 7);
-  const b = Math.floor(
-    parseInt(user?.firstName[1] ? user?.firstName[1] : "m", 36) * 7
-  );
-  return {
-    sx: { bgcolor: `rgb(${r},${g},${b})`, cursor: "pointer" },
-    children: initials
-  };
-};
 
 const AvatarMenu = (props: AvatarMenuProps) => {
   const { user } = props;
