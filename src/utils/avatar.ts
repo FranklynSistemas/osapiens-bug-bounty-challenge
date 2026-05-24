@@ -4,7 +4,7 @@ export const getInitials = (user: User) => {
   if (user.firstName || user.lastName) {
     const initials = [user.firstName, user.lastName]
       .map((_) => (_?.[0] ? _?.[0]?.toLocaleUpperCase() : _?.[0]))
-      .join("") ?? "";
+      .join("");
     return initials;
   }
   return "";

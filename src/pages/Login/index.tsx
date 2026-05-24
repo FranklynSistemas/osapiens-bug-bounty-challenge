@@ -1,6 +1,6 @@
 import { mdiLogin } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Button, Typography } from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,6 +35,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         {t("login.message")}
       </Typography>
       <Button variant="contained" disabled={loading} onClick={handleLogin}>
+        {loading ? <CircularProgress size={20} sx={{ mr: 1 }} color="inherit" /> : null}
         {t("login.button")}
       </Button>
     </Box>

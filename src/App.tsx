@@ -10,6 +10,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import StylesProvider from "@mui/styles/StylesProvider";
 
 import RootComponent from "./pages/Root/index";
+import ErrorBoundary from "./components/ErrorBoundary";
 import { osapiens } from "./themes";
 
 import "./i18n";
@@ -50,7 +51,9 @@ const AppContainer = () => {
             <StylesProvider injectFirst>
               <ThemeProvider theme={theme}>
                 <HashRouter>
-                  <RootComponent />
+                  <ErrorBoundary>
+                    <RootComponent />
+                  </ErrorBoundary>
                 </HashRouter>
               </ThemeProvider>
             </StylesProvider>
