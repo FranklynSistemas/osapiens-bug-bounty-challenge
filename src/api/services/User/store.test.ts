@@ -1,36 +1,30 @@
 import UserStore from "./store";
 
 describe("UserStore", () => {
+  let store: UserStore;
+
+  beforeEach(() => {
+    store = new UserStore();
+  });
+
   it("starts with null user", () => {
-    const store = new UserStore();
     expect(store.user).toBeNull();
   });
 
   describe("toggleLoginRole", () => {
-    it("alters role returned by subsequent getOwnUser", async () => {
-      jest.useFakeTimers();
-      const store = new UserStore();
-
+    it("alternates role returned by subsequent getOwnUser", async () => {
       store.toggleLoginRole();
-      const promise = store.getOwnUser();
-      jest.advanceTimersByTime(500);
-      await promise;
-
+      await store.getOwnUser(0);
       expect(store.user?.role).toBe("user");
 
       store.toggleLoginRole();
-      const promise2 = store.getOwnUser();
-      jest.advanceTimersByTime(500);
-      await promise2;
-
+      await store.getOwnUser(0);
       expect(store.user?.role).toBe("admin");
-      jest.useRealTimers();
     });
   });
 
   describe("clearUser", () => {
     it("sets user to null", () => {
-      const store = new UserStore();
       (store as any).user = { firstName: "test" };
       store.clearUser();
       expect(store.user).toBeNull();
@@ -38,20 +32,8 @@ describe("UserStore", () => {
   });
 
   describe("getOwnUser", () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(() => {
-      jest.useRealTimers();
-    });
-
     it("sets user with loginRole after resolving", async () => {
-      const store = new UserStore();
-      const promise = store.getOwnUser();
-
-      jest.advanceTimersByTime(500);
-      await promise;
+      await store.getOwnUser(0);
 
       expect(store.user).toEqual(
         expect.objectContaining({
@@ -64,11 +46,7 @@ describe("UserStore", () => {
     });
 
     it("returns SUCCESS status on resolve", async () => {
-      const store = new UserStore();
-      const promise = store.getOwnUser();
-
-      jest.advanceTimersByTime(500);
-      const result = await promise;
+      const result = await store.getOwnUser(0);
 
       expect(result).toEqual(
         expect.objectContaining({ status: "SUCCESS" }),

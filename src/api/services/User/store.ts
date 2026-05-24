@@ -32,7 +32,7 @@ export default class UserStore {
     this.user = null;
   }
 
-  async getOwnUser() {
+  async getOwnUser(delayMs: number = 500) {
     const [result, error] = (await resultOrError(
       new Promise((resolve) =>
         setTimeout(
@@ -41,11 +41,11 @@ export default class UserStore {
               firstName: "Aria",
               lastName: "Test",
               eMail: "linda.bolt@osapiens.com",
-              role: this.loginRole
+              role: this.loginRole,
             }),
-          500
-        )
-      )
+          delayMs,
+        ),
+      ),
     )) as ResultOrErrorResponse<User>;
 
     if (!!error) {
