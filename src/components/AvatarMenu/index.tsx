@@ -87,7 +87,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
             color="primary"
             size="medium"
           >
-            Edit Profile
+            {t("userMenu.editProfile")}
           </Button>
         </Box>
         <Box
@@ -106,7 +106,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
           >
             <Icon path={mdiTag} size={0.75} />
             <Box m={0.5} />
-            Edit Organization
+            {t("userMenu.editOrganization")}
           </Button>
         </Box>
         <Divider />
@@ -129,7 +129,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
               textTransform: "none"
             }}
           >
-            Data Privacy Statement
+            {t("userMenu.dataPrivacyStatement")}
           </Button>
           <Button
             variant="text"
@@ -139,7 +139,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
               textTransform: "none"
             }}
           >
-            Imprint
+            {t("userMenu.imprint")}
           </Button>
         </Box>
       </Menu>

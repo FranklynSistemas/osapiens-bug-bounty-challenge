@@ -14,7 +14,7 @@ interface Issue {
 
 const Home = () => {
   const { t } = useTranslation("app");
-  const issues = t("issues", { returnObjects: true }) as Issue[];
+  const issues = t("home.issues", { returnObjects: true }) as Issue[];
 
   return (
     <Box p={2} maxHeight="calc(100vh - 64px)" overflow={["auto", "auto"]}>
