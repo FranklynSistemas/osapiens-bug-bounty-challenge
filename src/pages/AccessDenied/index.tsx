@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import { styled, useTheme } from "@mui/material/styles";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import { ERoute } from "../../types/global";
 
 const Container = styled("div")(({ theme }) => ({
   display: "flex",
@@ -17,15 +19,15 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 interface AccessDeniedProps {
-  onRetry: () => void;
+  onLogout: () => void;
 }
 
-const AccessDenied: React.FC<AccessDeniedProps> = ({ onRetry }) => {
+const AccessDenied: React.FC<AccessDeniedProps> = ({ onLogout }) => {
   const { t } = useTranslation("app");
   const theme = useTheme();
+  const history = useHistory();
 
   const color = theme.palette.error.main;
-
   React.useEffect(() => {
     // on screen leave
     return () => {
@@ -33,7 +35,7 @@ const AccessDenied: React.FC<AccessDeniedProps> = ({ onRetry }) => {
     };
     // eslint-disable-next-line
   }, []);
-
+  
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Container>
@@ -42,8 +44,8 @@ const AccessDenied: React.FC<AccessDeniedProps> = ({ onRetry }) => {
           {t("accessDenied.title")}
         </Typography>
         <Typography>{t("accessDenied.message")}</Typography>
-        <Button sx={{ color }} onClick={onRetry}>
-          {t("accessDenied.retry")}
+        <Button sx={{ color }} onClick={() => { onLogout(); history.push(ERoute.LOGIN); }}>
+          {t("logout")}
         </Button>
       </Container>
       <Box sx={{ flex: 3 }}></Box>

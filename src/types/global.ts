@@ -1,6 +1,7 @@
 export enum ERoute {
   ROOT = "/",
   HOME = "/home",
+  LOGIN = "/login",
   SETTINGS_ACCOUNT = "/settings/account",
   SETTINGS_DETAILS = "/settings/details"
 }

@@ -7,8 +7,8 @@ import { observer } from "mobx-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TRoute } from "../../types/global";
-import { resultOrError } from "../../utils/global";
 import AccessDenied from "../AccessDenied";
+import Login from "../Login";
 import { routes as useRoutes } from "../routes";
 
 const hideSplashScreen = () => {
@@ -35,7 +35,7 @@ const Root = () => {
   const { route = fallbackRoute, MatchedElement } = useMatchedRoute(
     routes,
     Fallback,
-    { matchOnSubPath: true }
+    { matchOnSubPath: true },
   );
 
   let pageTitle = t(`routes.${route.path}`);
@@ -52,16 +52,26 @@ const Root = () => {
   }, []);
 
   useEffect(() => {
-    if (!user && userStore) {
-      userStore.getOwnUser().finally(() => setInitialLoading(false));
-    } else {
-      setInitialLoading(false);
-    }
-  }, [user, userStore]);
+    userStore.getOwnUser().finally(() => setInitialLoading(false));
+  }, []);
 
-  if (!initialLoading && !user) {
-    const handleRetry = () => userStore?.getOwnUser();
-    return <AccessDenied onRetry={handleRetry} />;
+  const onLogin = async () => {
+    userStore.toggleLoginRole();
+    await userStore.getOwnUser();
+  };
+
+  const onLogout = () => {
+    userStore.clearUser();
+  };
+
+  if (initialLoading) return null;
+
+  if (!user) {
+    return <Login onLogin={onLogin} />;
+  }
+
+  if (user.role !== "admin") {
+    return <AccessDenied onLogout={onLogout} />;
   }
 
   return (
@@ -72,7 +82,7 @@ const Root = () => {
         top: 0,
         left: 0,
         width: "100vw",
-        height: "100vh"
+        height: "100vh",
       }}
     >
       {loadingApp && (
@@ -91,11 +101,15 @@ const Root = () => {
           display: "flex",
           height: "100%",
           width: "100%",
-          background: "#f5f5f5"
+          background: "#f5f5f5",
         }}
       >
         <Slide direction="down" in={!loadingApp} mountOnEnter>
-          <AppHeader user={user ?? {}} pageTitle={pageTitle} onLogout={() => userStore?.clearUser()} />
+          <AppHeader
+            user={user ?? {}}
+            pageTitle={pageTitle}
+            onLogout={onLogout}
+          />
         </Slide>
         <Box
           component="main"
@@ -104,7 +118,7 @@ const Root = () => {
             height: `calc(100% - ${theme.tokens.header.height})`,
             width: "100%",
             marginTop:
-              theme.tokens.header.height /* Necessary because of AppBar */
+              theme.tokens.header.height /* Necessary because of AppBar */,
           }}
         >
           {MatchedElement}

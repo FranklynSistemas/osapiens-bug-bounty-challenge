@@ -37,7 +37,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
     setAnchorEl(null);
   };
 
-  const navigateAndClose = (path: string) => {
+  const navigateAndClose = (path: ERoute) => {
     handleClose();
     history.push(path);
   };
@@ -97,7 +97,7 @@ const AvatarMenu = (props: AvatarMenuProps) => {
         <Divider />
         <Box display="flex" flexDirection="column" alignItems="center" p={2}>
           <Tooltip title={<Box>{t("logout")}</Box>}>
-            <Button onClick={() => { onLogout(); navigateAndClose(ERoute.HOME); }} variant="text">
+            <Button onClick={() => { onLogout(); navigateAndClose(ERoute.LOGIN); }} variant="text">
               <Icon path={mdiLogoutVariant} size={1} />
               <Box m={0.5} />
               {t("logout")}

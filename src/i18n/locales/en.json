@@ -37,10 +37,14 @@
       }
     ]
   },
+  "login": {
+    "title": "Welcome",
+    "message": "Please log in to continue.",
+    "button": "Login"
+  },
   "accessDenied": {
     "title": "Access Denied",
-    "message": "Please speak to your administrator.",
-    "retry": "Retry Login"
+    "message": "You do not have permission to access this application. Please speak to your administrator."
   },
   "settings": {
     "account": {

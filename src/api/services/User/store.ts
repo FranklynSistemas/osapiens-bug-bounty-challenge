@@ -6,17 +6,26 @@ import {
 } from "../../../types/global";
 import { resultOrError, ResultOrErrorResponse } from "../../../utils/global";
 
+export type UserRole = "admin" | "user";
+
 export interface User {
   firstName?: string;
   lastName?: string;
   eMail?: string;
+  role?: UserRole;
 }
 
 export default class UserStore {
   user: User | null = null;
+  private loginRole: UserRole = "admin";
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  // Helper to simulate a user with denied access
+  toggleLoginRole() {
+    this.loginRole = this.loginRole === "admin" ? "user" : "admin";
   }
 
   clearUser() {
@@ -31,7 +40,8 @@ export default class UserStore {
             resolve({
               firstName: "Aria",
               lastName: "Test",
-              eMail: "linda.bolt@osapiens.com"
+              eMail: "linda.bolt@osapiens.com",
+              role: this.loginRole
             }),
           500
         )

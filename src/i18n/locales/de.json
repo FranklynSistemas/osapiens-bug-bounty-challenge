@@ -37,10 +37,14 @@
       }
     ]
   },
+  "login": {
+    "title": "Willkommen",
+    "message": "Bitte melden Sie sich an.",
+    "button": "Anmelden"
+  },
   "accessDenied": {
     "title": "Zugriff verweigert",
-    "message": "Bitte wenden Sie sich an Ihren Administrator.",
-    "retry": "Erneut anmelden"
+    "message": "Sie haben keine Berechtigung für diese Anwendung. Bitte wenden Sie sich an Ihren Administrator."
   },
   "settings": {
     "account": {
