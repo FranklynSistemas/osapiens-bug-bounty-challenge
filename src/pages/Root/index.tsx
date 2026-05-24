@@ -45,14 +45,11 @@ const Root = () => {
     pageTitle = t(`routes./${groupName}`);
   }
 
-  const loadingApp = false;
-
   useEffect(() => {
-    hideSplashScreen();
-  }, []);
-
-  useEffect(() => {
-    userStore.getOwnUser().finally(() => setInitialLoading(false));
+    userStore.getOwnUser().finally(() => {
+      setInitialLoading(false);
+      hideSplashScreen();
+    });
   }, []);
 
   const onLogin = async () => {
@@ -64,7 +61,19 @@ const Root = () => {
     userStore.clearUser();
   };
 
-  if (initialLoading) return null;
+  if (initialLoading) {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        width="100vw"
+        height="100vh"
+      >
+        <CircularProgress color="primary" size={100} />
+      </Box>
+    );
+  }
 
   if (!user) {
     return <Login onLogin={onLogin} />;
@@ -85,17 +94,6 @@ const Root = () => {
         height: "100vh",
       }}
     >
-      {loadingApp && (
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          width="100%"
-          height="100%"
-        >
-          <CircularProgress color="primary" size={100} />
-        </Box>
-      )}
       <Box
         sx={{
           display: "flex",
@@ -104,7 +102,7 @@ const Root = () => {
           background: "#f5f5f5",
         }}
       >
-        <Slide direction="down" in={!loadingApp} mountOnEnter>
+        <Slide direction="down" in mountOnEnter>
           <AppHeader
             user={user ?? {}}
             pageTitle={pageTitle}
