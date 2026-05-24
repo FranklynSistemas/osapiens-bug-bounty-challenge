@@ -42,10 +42,11 @@ const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
   const countdownMinutes = `${~~(countdown / 60)}`.padStart(2, "0");
   const countdownSeconds = (countdown % 60).toFixed(0).padStart(2, "0");
 
-  useEffect(() => {
-    setInterval(() => {
+useEffect(() => {
+    const intervalId = setInterval(() => {
       setCount((c) => c + 1);
     }, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -80,11 +81,11 @@ const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
             </Typography>
           </Box>
           <Box sx={{ flex: 1, justifyContent: "flex-end", display: "flex" }}>
-            {user && user.eMail && (
-              <Grow in={Boolean(user && user.eMail)}>
+            <Grow in={Boolean(user && user.eMail)} unmountOnExit>
+              <Box display="flex">
                 <AvatarMenu user={user} />
-              </Grow>
-            )}
+              </Box>
+            </Grow>
           </Box>
         </Box>
       </Toolbar>
